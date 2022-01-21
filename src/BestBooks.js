@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
+import { Container } from 'react-bootstrap/lib/Tab';
 
 const SERVER = process.env.REACT_APP_SERVER;
 
@@ -48,9 +49,13 @@ class BestBooks extends React.Component {
     return (
       <>
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
+</>
 
         {this.state.books.length ? (
+          <>
           <p>Book Carousel coming soon</p>
+          
+          <Container>
           <Carousel>
           <Carousel.Item>
             
@@ -60,13 +65,14 @@ class BestBooks extends React.Component {
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
-          
+        </Container>
+        </>
         ) : (
           <h3>No Books Found :(</h3>
         )}
 
 
-      </>
+      
     )
   }
 }
