@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
-import { Container } from 'react-bootstrap/lib/Tab';
 
+const books = [];
+const booksdata = [];
 const SERVER = process.env.REACT_APP_SERVER;
 
 class BestBooks extends React.Component {
@@ -22,7 +23,7 @@ class BestBooks extends React.Component {
 
   async getBooks(status = null) {
     let apiUrl = `${SERVER}/books`;
-
+    console.log('api');
     if (status) {
       apiUrl += `?status=${status}`;
     }
@@ -30,6 +31,8 @@ class BestBooks extends React.Component {
     try {
       const response = await axios.get(apiUrl);
       this.setState({ books: response.data });
+      booksdata.push(response.data);
+      
     } catch (error) {
       console.log(error);
     }
@@ -43,36 +46,24 @@ class BestBooks extends React.Component {
   }
 
   render() {
-
+    console.log('books');
     /* TODO: render user's books in a Carousel */
-
+    // booksdata.map(element => {
+    //   let book = <Carousel.Item>{this.state.books.title}
+    //   <Carousel.Caption>{this.state.books.description}</Carousel.Caption></Carousel.Item>;
+    //   books.push(book);
+    // });
     return (
       <>
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
-</>
-
         {this.state.books.length ? (
-          <>
-          <p>Book Carousel coming soon</p>
-          
-          <Container>
           <Carousel>
-          <Carousel.Item>
-            
-            <Carousel.Caption>
-              <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-            </Carousel.Caption>
-          </Carousel.Item>
+           {books} 
         </Carousel>
-        </Container>
-        </>
         ) : (
           <h3>No Books Found :(</h3>
         )}
-
-
-      
+      </>
     )
   }
 }
