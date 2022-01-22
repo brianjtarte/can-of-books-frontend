@@ -3,6 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import BestBooks from './BestBooks';
 import Profile from './Profile';
+import Login from './Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
@@ -41,11 +42,14 @@ class App extends React.Component {
       <>
         <Router>
           <Header user={this.state.user} onLogout={this.logoutHandler} />
-          <BestBooks/>
+         
           <Switch>
             <Route exact path="/">
-              
-              {/* TODO: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
+              {this.state.user ? (
+                 <BestBooks/>
+              ) : (
+                <Login/>
+              )}
             </Route>
             <Route exact path="/profile">
               <Profile/>
