@@ -20,9 +20,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: null,
-
-      loginclick: null,
-
+      userName: null,
+      loginClick: null,
+      userEmail: null,
     }
   }
 
@@ -31,7 +31,7 @@ class App extends React.Component {
   loginHandler = (user) => {
     this.setState({
 
-      user: true, loginClick: true
+      user: null, loginClick: true
     })
   }
 
@@ -39,6 +39,22 @@ class App extends React.Component {
     this.setState({
       user: null,
     })
+  }
+
+  formHandler = (event) =>{
+    this.setState({
+      user: true,
+    });
+    if (event.target.id === 'formUserName'){
+      this.setState({
+        username: event.target.value,
+        user: true,
+      } );
+        } else if (event.target.id === 'formEmail'){
+          this.setState ({email: event.target.value,
+            user: true,
+      });
+    }
   }
 
   render() {
@@ -52,11 +68,11 @@ class App extends React.Component {
               {this.state.user ? (
                  <BestBooks/>
               ) : (
-                <Login loginHandler={this.loginHandler}/>
+                <Login loginHandler={this.loginHandler} loginClick={this.state.loginClick} formHandler={this.formHandler}/>
               )}
             </Route>
             <Route exact path="/profile">
-              <Profile/>
+              <Profile userName={this.state.userName} userEmail={this.state.userEmail}/>
             </Route>
             
           </Switch>

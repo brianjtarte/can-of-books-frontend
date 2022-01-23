@@ -5,6 +5,9 @@ import Card from 'react-bootstrap/Card';
 import './Login.css';
 
 class Login extends React.Component {
+
+  
+
   render() {
     return (
       <Card style={{ width: '18rem' }}>
@@ -14,10 +17,10 @@ class Login extends React.Component {
             Click Below to Log In
           </Card.Text>
 
-          {!this.props.user ? (
+          {!this.props.loginClick ? (
         <LoginButton loginHandler={this.props.loginHandler}/>
       ) : (
-        <LoginForm />
+        <LoginForm formHandler={this.props.formHandler}/>
     )
     }
 

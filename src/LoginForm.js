@@ -8,19 +8,11 @@ class LoginForm extends Component {
     this.state = {
       email: '',
       username: '',
+      user: null,
     }
   }
 
-  formHandler = (event) =>{
-    if (event.target.id === 'formUserName'){
-      this.setState({
-        username: event.target.value
-      });
-        } else if (event.target.id === 'formEmail'){
-          this.setState ({email: event.target.value
-      });
-    }
-  }
+  
   render() {
     /* TODO: create a simple login form that collects username and and email, and lets parent component know when form has been submitted */
     return (
@@ -37,7 +29,7 @@ class LoginForm extends Component {
     <Form.Label>E-Mail</Form.Label>
     <Form.Control type="email" placeholder="Enter Email" />
   </Form.Group>
-  <Button variant="primary" type="submit">
+  <Button variant="primary" type="submit" onClick={this.props.formHandler}>
     Submit
   </Button>
 </Form>
