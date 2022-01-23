@@ -13,12 +13,14 @@ class Login extends React.Component {
           <Card.Text>
             Click Below to Log In
           </Card.Text>
+
           {this.state.loginclick ? (
         <LoginButton loginHandler={this.props.loginHandler}/>
       ) : (
         <LoginForm />
     )
     }
+
         </Card.Body>
       </Card>
     )
