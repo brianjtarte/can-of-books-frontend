@@ -1,5 +1,6 @@
 import React from 'react';
 import LoginButton from './LoginButton.js';
+import LoginForm from './LoginForm';
 import Card from 'react-bootstrap/Card';
 import './Login.css';
 
@@ -12,7 +13,12 @@ class Login extends React.Component {
           <Card.Text>
             Click Below to Log In
           </Card.Text>
-          <LoginButton/>
+          {this.state.loginclick ? (
+        <LoginButton loginHandler={this.props.loginHandler}/>
+      ) : (
+        <LoginForm />
+    )
+    }
         </Card.Body>
       </Card>
     )

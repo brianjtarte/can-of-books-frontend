@@ -20,6 +20,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: null,
+      loginclick: null,
     }
   }
 
@@ -27,7 +28,7 @@ class App extends React.Component {
 
   loginHandler = (user) => {
     this.setState({
-      user,
+      user: true, loginclick: true,
     })
   }
 
@@ -48,7 +49,7 @@ class App extends React.Component {
               {this.state.user ? (
                  <BestBooks/>
               ) : (
-                <Login/>
+                <Login loginHandler={this.loginHandler}/>
               )}
             </Route>
             <Route exact path="/profile">
