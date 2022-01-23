@@ -20,7 +20,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: null,
-      loginClick: null,
+
+      loginclick: null,
+
     }
   }
 
@@ -28,6 +30,7 @@ class App extends React.Component {
 
   loginHandler = (user) => {
     this.setState({
+
       user: true, loginClick: true
     })
   }
