@@ -10,6 +10,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import { Container } from 'react-bootstrap';
 
 
 
@@ -48,12 +49,13 @@ class App extends React.Component {
     if (event.target.id === 'formUserName'){
       this.setState({
         username: event.target.value,
-        user: true,
+        
       } );
         } else if (event.target.id === 'formEmail'){
           this.setState ({email: event.target.value,
-            user: true,
+            
       });
+      console.log(event.target.id);
     }
   }
 
@@ -72,7 +74,9 @@ class App extends React.Component {
               )}
             </Route>
             <Route exact path="/profile">
+              <Container>
               <Profile userName={this.state.userName} userEmail={this.state.userEmail}/>
+              </Container>
             </Route>
             
           </Switch>
