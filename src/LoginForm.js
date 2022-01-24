@@ -8,28 +8,34 @@ class LoginForm extends Component {
     this.state = {
       email: '',
       username: '',
-      user: null,
     }
   }
-
+  formHandler = (event) =>{
+    if (event.target.id === 'formUserName'){
+      this.setState({
+        username: event.target.value
+      });
+        } else if (event.target.id === 'formEmail'){
+          this.setState ({email: event.target.value
+      });
+    }
+  }
   
   render() {
     /* TODO: create a simple login form that collects username and and email, and lets parent component know when form has been submitted */
     return (
-      <Form>
-  <Form.Group className="mb-3" controlId="formUserName">
-    <Form.Label>Username</Form.Label>
-    <Form.Control type="username" placeholder="Enter Username" />
-    <Form.Text className="text-muted">
-      We'll never share your email with anyone else.
-    </Form.Text>
-  </Form.Group>
-
+      <Form onSubmit={ (event) => this.props.loginHandler({username: this.state.username, email: this.state.email}, event )}>
   <Form.Group className="mb-3" controlId="formEmail">
     <Form.Label>E-Mail</Form.Label>
-    <Form.Control type="email" placeholder="Enter Email" />
+    <Form.Control onChange={this.formHandler} type="email" placeholder="Enter Email" />
   </Form.Group>
-  <Button variant="primary" type="submit" onClick={this.props.formHandler}>
+  <Form.Group className="mb-3" controlId="formUserName">
+    <Form.Label>Username</Form.Label>
+    <Form.Control onChange={this.formHandler} type="username" placeholder="Enter Username" />
+    <Form.Text className="text-muted">
+    </Form.Text>
+  </Form.Group>
+  <Button variant="primary" type="submit">
     Submit
   </Button>
 </Form>

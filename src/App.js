@@ -10,7 +10,6 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import { Container } from 'react-bootstrap';
 
 
 
@@ -21,64 +20,42 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: null,
-      userName: null,
-      loginClick: null,
-      userEmail: null,
     }
   }
 
 
 
-  loginHandler = (user) => {
+  loginHandler = (user, event) => {
+    event.preventDefault();
     this.setState({
-
-      user: null, loginClick: true
+      user,
     })
   }
 
   logoutHandler = () => {
     this.setState({
-      user: null,
+      user: null
     })
-  }
-
-  formHandler = (event) =>{
-    this.setState({
-      user: true,
-    });
-    if (event.target.id === 'formUserName'){
-      this.setState({
-        username: event.target.value,
-        
-      } );
-        } else if (event.target.id === 'formEmail'){
-          this.setState ({email: event.target.value,
-            
-      });
-      console.log(event.target.id);
-    }
   }
 
   render() {
     return (
       <>
         <Router>
-          <Header user={this.state.user} onLogout={this.logoutHandler} />
-         
+          <Header user={this.state.user} logoutHandler={this.logoutHandler} />
+
           <Switch>
             <Route exact path="/">
               {this.state.user ? (
-                 <BestBooks/>
+                <BestBooks />
               ) : (
-                <Login loginHandler={this.loginHandler} loginClick={this.state.loginClick} formHandler={this.formHandler}/>
+                <Login loginHandler={this.loginHandler} />
               )}
             </Route>
             <Route exact path="/profile">
-              <Container>
-              <Profile userName={this.state.userName} userEmail={this.state.userEmail}/>
-              </Container>
+              {this.state.user ? <Profile user={this.state.user} /> : <h3>Please Login to View Profile</h3>}
             </Route>
-            
+
           </Switch>
           <Footer />
         </Router>
