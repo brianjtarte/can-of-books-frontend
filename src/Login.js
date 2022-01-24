@@ -1,9 +1,23 @@
 import React from 'react';
 import LoginButton from './LoginButton.js';
+import LoginForm from './LoginForm.js';
 import Card from 'react-bootstrap/Card';
 import './Login.css';
 
 class Login extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      displayForm: false,
+    };
+  }
+
+  displayFormHandler = () => {
+    this.setState({
+      displayForm: true
+    });
+  }
   render() {
     return (
       <Card style={{ width: '18rem' }}>
@@ -12,7 +26,7 @@ class Login extends React.Component {
           <Card.Text>
             Click Below to Log In
           </Card.Text>
-          <LoginButton loginHandler={this.props.loginHandler}/>
+          {this.state.displayForm ? <LoginForm loginHandler={this.props.loginHandler}/> : <LoginButton buttonClickHandler={this.displayFormHandler} />}
         </Card.Body>
       </Card>
     )

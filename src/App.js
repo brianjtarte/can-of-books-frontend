@@ -20,21 +20,21 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: null,
-      loginClick: null,
     }
   }
 
 
 
-  loginHandler = (user) => {
+  loginHandler = (user, event) => {
+    event.preventDefault();
     this.setState({
-      user: true, loginClick: true
+       user,
     })
   }
 
   logoutHandler = () => {
     this.setState({
-      user: null,
+      user: null
     })
   }
 
@@ -42,18 +42,18 @@ class App extends React.Component {
     return (
       <>
         <Router>
-          <Header user={this.state.user} onLogout={this.logoutHandler} />
+          <Header user={this.state.user} logoutHandler={this.logoutHandler} />
          
           <Switch>
             <Route exact path="/">
               {this.state.user ? (
                  <BestBooks/>
               ) : (
-                <Login loginHandler={this.loginHandler}/>
+                <Login loginHandler={this.loginHandler} />
               )}
             </Route>
             <Route exact path="/profile">
-              <Profile/>
+            {this.state.user ? <Profile user={this.state.user} /> : <h3>Please Login to View Profile</h3>}
             </Route>
             
           </Switch>

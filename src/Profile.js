@@ -6,8 +6,8 @@ class Profile extends Component {
     /* TODO: render information about logged in user */
     /* STRETCH TODO: if no logged in user then redirect home */
     return <>
-      <p>`Username: ${this.props.userName}`</p>
-      <p>`Email:{this.props.userEmail}`</p>
+      <p>Username: {this.props.user.username}</p>
+      <p>Email:{this.props.user.email}</p>
     </>
   }
 };
