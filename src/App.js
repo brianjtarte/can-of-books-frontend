@@ -28,7 +28,7 @@ class App extends React.Component {
   loginHandler = (user, event) => {
     event.preventDefault();
     this.setState({
-       user,
+      user,
     })
   }
 
@@ -43,19 +43,19 @@ class App extends React.Component {
       <>
         <Router>
           <Header user={this.state.user} logoutHandler={this.logoutHandler} />
-         
+
           <Switch>
             <Route exact path="/">
               {this.state.user ? (
-                 <BestBooks/>
+                <BestBooks />
               ) : (
                 <Login loginHandler={this.loginHandler} />
               )}
             </Route>
             <Route exact path="/profile">
-            {this.state.user ? <Profile user={this.state.user} /> : <h3>Please Login to View Profile</h3>}
+              {this.state.user ? <Profile user={this.state.user} /> : <h3>Please Login to View Profile</h3>}
             </Route>
-            
+
           </Switch>
           <Footer />
         </Router>

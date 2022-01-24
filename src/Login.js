@@ -26,7 +26,7 @@ class Login extends React.Component {
           <Card.Text>
             Click Below to Log In
           </Card.Text>
-          {this.state.displayForm ? <LoginForm loginHandler={this.props.loginHandler}/> : <LoginButton buttonClickHandler={this.displayFormHandler} />}
+          {this.state.displayForm ? <LoginForm loginHandler={this.props.loginHandler}/> : <LoginButton displayFormHandler={this.displayFormHandler} />}
         </Card.Body>
       </Card>
     )
