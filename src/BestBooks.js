@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
+import BookFormModal from './BookFormModal';
+import AddBook from './AddBook';
 import './Carousel.css';
 
 const SERVER = process.env.REACT_APP_SERVER;
@@ -9,7 +11,8 @@ class BestBooks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: []
+      books: [],
+      bookForm: false,
     }
   }
 
@@ -20,7 +23,26 @@ class BestBooks extends React.Component {
     console.log('HELLO WORLD!')
   }
 
+  bookFormHandler = () => {
+    this.setState({
+      bookForm: true
+    });
+  }
 
+  onHide = () => {
+    this.setState({
+      bookForm: false
+    });
+  }
+  createNewBooks = async (newBookObj) => {
+    console.log(newBookObj);
+    const response = await axios.post(`${SERVER}/books`, newBookObj);
+    console.log(response.data);
+    let newBook = response.data;
+    this.setState({
+      books: [...this.state.books, newBook]
+    })
+  }
   getBooks = async () => {
     let apiUrl = `${SERVER}/books`;
     console.log(apiUrl);
@@ -44,7 +66,7 @@ class BestBooks extends React.Component {
           <Carousel>
             {this.state.books.map((book, idx) => (
               <Carousel.Item key={idx}>
-                  <img src={book.image} alt="coming soon"/>
+                <img src={book.image} alt="coming soon" />
                 <Carousel.Caption>
                   <h2 id="desc">{book.title} </h2>
                   <p>{book.description}</p>
@@ -57,7 +79,9 @@ class BestBooks extends React.Component {
           </Carousel>
         ) : (
           <h3>No Books Found </h3>
-        )}
+        )
+        }
+        {this.state.bookForm ? <BookFormModal onCreate={this.createNewBooks} bookFormHandler={this.bookFormHandler} onHide ={this.onHide} /> : <AddBook onButtonClick={this.bookFormHandler} /> }
       </>
     )
   }
