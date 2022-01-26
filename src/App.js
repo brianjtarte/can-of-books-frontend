@@ -49,7 +49,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               {this.state.user ? (
-                <BestBooks />
+                <BestBooks user={this.state.user}/>
               ) : (
                 <Login loginHandler={this.loginHandler} />
               )}

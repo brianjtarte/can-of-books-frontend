@@ -4,6 +4,8 @@ import Carousel from 'react-bootstrap/Carousel';
 import BookFormModal from './BookFormModal';
 import AddBook from './AddBook';
 import './Carousel.css';
+// import Button from 'react-bootstrap/Button';
+import DeleteButton from './DeleteButton';
 
 const SERVER = process.env.REACT_APP_SERVER;
 
@@ -52,7 +54,38 @@ class BestBooks extends React.Component {
 
   }
 
+  // deleteBook = async (bookId) => {
+  //   // const id = bookId._id
+  //   // console.log(id);
+  //   const url = `${process.env.REACT_APP_SERVER}/books/${bookId._id}`;
+    
+  //   try {
+  //     await axios.delete(url);
+  //     const filteredBooks = this.state.books.filter(targetBook => targetBook._id !== bookId._id);
+  //     this.setState({ books: filteredBooks});
+  //     console.log(filteredBooks);
+  //   } catch(error) {
+  //     console.log(error);
+  //   }
+  // }
 
+  deleteBook = async (bookId) => {
+    console.log('book', bookId);
+    const id = bookId._id;
+    let newBooks = this.state.books;
+    console.log(newBooks);
+    newBooks = this.state.books.filter(b => b._id !== id);
+    this.setState({ books: newBooks });
+    console.log(id);
+    const config = {
+      params: { email: this.props.user.email },
+      method: 'delete',
+      baseURL: process.env.REACT_APP_SERVER,
+      url: `/books/${id}`
+    }
+    await axios(config);
+
+  }
 
 
   render() {
@@ -68,8 +101,9 @@ class BestBooks extends React.Component {
               <Carousel.Item key={idx}>
                 <img src={book.image} alt="coming soon" />
                 <Carousel.Caption>
-                  <h2 id="desc">{book.title} </h2>
+                  <h2 id="desc">{book.title}</h2>
                   <p>{book.description}</p>
+                  <DeleteButton deleteBook={this.deleteBook} book={book}/>
                 </Carousel.Caption>
 
               </Carousel.Item>
