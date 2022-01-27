@@ -6,6 +6,8 @@ import AddBook from './AddBook';
 import './Carousel.css';
 // import Button from 'react-bootstrap/Button';
 import DeleteButton from './DeleteButton';
+import FormUpdateModal from './FormUpdateModal';
+import UpdateBook from './UpdateBook';
 
 const SERVER = process.env.REACT_APP_SERVER;
 
@@ -15,6 +17,7 @@ class BestBooks extends React.Component {
     this.state = {
       books: [],
       bookForm: false,
+      updateForm: false,
     }
   }
 
@@ -31,9 +34,16 @@ class BestBooks extends React.Component {
     });
   }
 
+  updateHandler = () => {
+    this.setState({
+      updateForm: true
+    });
+  }
+
   onHide = () => {
     this.setState({
-      bookForm: false
+      bookForm: false,
+      updateForm: false,
     });
   }
   createNewBooks = async (newBookObj) => {
@@ -74,6 +84,27 @@ class BestBooks extends React.Component {
 
   }
 
+  onUpdate = async booksToBeUpdated => {
+      try {
+        await axios.put(`${SERVER}/books/${booksToBeUpdated._id}`, booksToBeUpdated);
+        
+        const updatedBooks = this.state.books.map(existingBook => {
+          if (existingBook._id === booksToBeUpdated._id) {
+            return booksToBeUpdated;
+          } else {
+            return existingBook;
+          }
+        });
+  
+        this.setState({
+          books: updatedBooks
+        })
+  
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  
 
   render() {
 
@@ -103,6 +134,7 @@ class BestBooks extends React.Component {
         )
         }
         {this.state.bookForm ? <BookFormModal onCreate={this.createNewBooks} bookFormHandler={this.bookFormHandler} onHide ={this.onHide} /> : <AddBook onButtonClick={this.bookFormHandler} /> }
+        {this.state.bookForm ? <FormUpdateModal onUpdate={this.onUpdate} updateHandler={this.updateHandler} onHide ={this.onHide} /> : <UpdateBook onButtonClick={this.bookFormHandler} onUpdate={this.onUpdate}/> }
       </>
     )
   }
