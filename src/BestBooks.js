@@ -54,20 +54,6 @@ class BestBooks extends React.Component {
 
   }
 
-  // deleteBook = async (bookId) => {
-  //   // const id = bookId._id
-  //   // console.log(id);
-  //   const url = `${process.env.REACT_APP_SERVER}/books/${bookId._id}`;
-    
-  //   try {
-  //     await axios.delete(url);
-  //     const filteredBooks = this.state.books.filter(targetBook => targetBook._id !== bookId._id);
-  //     this.setState({ books: filteredBooks});
-  //     console.log(filteredBooks);
-  //   } catch(error) {
-  //     console.log(error);
-  //   }
-  // }
 
   deleteBook = async (bookId) => {
     console.log('book', bookId);
@@ -84,6 +70,7 @@ class BestBooks extends React.Component {
       url: `/books/${id}`
     }
     await axios(config);
+    console.log(config);
 
   }
 
