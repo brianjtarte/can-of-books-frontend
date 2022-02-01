@@ -9,7 +9,7 @@ import DeleteButton from './DeleteButton';
 import FormUpdateModal from './FormUpdateModal';
 import UpdateBook from './UpdateBook';
 
-const SERVER = process.env.REACT_APP_SERVER;
+const SERVER = 'https://can-of-books-backend-project.herokuapp.com';
 
 class BestBooks extends React.Component {
   constructor(props) {
