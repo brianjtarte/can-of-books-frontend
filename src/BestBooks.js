@@ -25,7 +25,7 @@ class BestBooks extends React.Component {
 
   componentDidMount() {
     this.getBooks();
-    console.log('HELLO WORLD!')
+    console.log('Your Books Have Been Received!')
   }
 
   bookFormHandler = () => {
