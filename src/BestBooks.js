@@ -9,7 +9,7 @@ import DeleteButton from './DeleteButton';
 import FormUpdateModal from './FormUpdateModal';
 import UpdateBook from './UpdateBook';
 
-const SERVER = 'https://can-of-books-backend-project.herokuapp.com';
+const SERVER = 'http://localhost:3001' || 'https://can-of-books-backend-project.herokuapp.com/';
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -76,7 +76,7 @@ class BestBooks extends React.Component {
     const config = {
       params: { email: this.props.user.email },
       method: 'delete',
-      baseURL: process.env.REACT_APP_SERVER,
+      baseURL: `${SERVER}`,
       url: `/books/${id}`
     }
     await axios(config);
@@ -84,26 +84,24 @@ class BestBooks extends React.Component {
 
   }
 
-  onUpdate = async booksToBeUpdated => {
-      try {
-        await axios.put(`${SERVER}/books/${booksToBeUpdated._id}`, booksToBeUpdated);
-        
-        const updatedBooks = this.state.books.map(existingBook => {
-          if (existingBook._id === booksToBeUpdated._id) {
-            return booksToBeUpdated;
-          } else {
-            return existingBook;
-          }
-        });
-  
-        this.setState({
-          books: updatedBooks
-        })
-  
-      } catch (error) {
-        console.error(error);
-      }
+  onUpdate = async (updateBookId) => {
+    console.log('book', updateBookId);
+    const id = updateBookId._id;
+    let updateBooks = this.state.books;
+    console.log(updateBooks);
+    updateBooks = this.state.books.map(b => b._id === updateBookId._id ? updateBooks : b );
+    this.setState({ books: updateBooks });
+    console.log(id);
+    const config = {
+      params: { email: this.props.user.email },
+      method: 'put',
+      baseURL: `${SERVER}`,
+      url: `/books/${id}`
     }
+    await axios(config);
+    console.log(config);
+
+  }
   
 
   render() {
@@ -122,6 +120,7 @@ class BestBooks extends React.Component {
                   <h2 id="desc">{book.title}</h2>
                   <p>{book.description}</p>
                   <DeleteButton deleteBook={this.deleteBook} book={book}/>
+                  <UpdateBook onUpdate={this.onUpdate} book={book} onButtonClick={this.updateHandler}/>
                 </Carousel.Caption>
 
               </Carousel.Item>
@@ -134,7 +133,7 @@ class BestBooks extends React.Component {
         )
         }
         {this.state.bookForm ? <BookFormModal onCreate={this.createNewBooks} bookFormHandler={this.bookFormHandler} onHide ={this.onHide} /> : <AddBook onButtonClick={this.bookFormHandler} /> }
-        {this.state.bookForm ? <FormUpdateModal onUpdate={this.onUpdate} updateHandler={this.updateHandler} onHide ={this.onHide} /> : <UpdateBook onButtonClick={this.bookFormHandler} onUpdate={this.onUpdate}/> }
+        {this.state.updateForm ? <FormUpdateModal onUpdate={this.onUpdate} updateHandler={this.updateHandler} onHide ={this.onHide} /> : null }
       </>
     )
   }

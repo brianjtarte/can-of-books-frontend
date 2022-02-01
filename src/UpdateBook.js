@@ -1,12 +1,12 @@
 import { Component } from "react";
-
+import Button from 'react-bootstrap/Button'
 class UpdateBook extends Component {
 
   render() {
     return (
-      <button onClick={() => this.props.onUpdate(this.props.book)}>
+      <Button onClick= {() => this.props.onButtonClick(this.props.book) && this.props.onUpdate()}>
         Update
-      </button>
+      </Button>
     );
   }
 };
