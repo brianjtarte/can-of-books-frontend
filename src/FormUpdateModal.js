@@ -26,7 +26,7 @@ export default class FormUpdateModal extends Component {
   
   render() {
     return (
-        <Modal show={this.props.bookFormUpdater} onHide={this.props.onHide}>
+        <Modal show={this.props.updateHandler} onHide={this.props.onHide}>
           <Modal.Header closeButton>
             <Modal.Body>
       <Form onSubmit={this.handleSubmit}>
@@ -42,10 +42,10 @@ export default class FormUpdateModal extends Component {
           <Form.Label>Book Status</Form.Label>
           <Form.Control type="name" placeholder="Enter Book Status" />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="userEmail">
+        {/* <Form.Group className="mb-3" controlId="userEmail">
           <Form.Label>Email</Form.Label>
           <Form.Control type="email" placeholder="Enter user email" />
-        </Form.Group>
+        </Form.Group> */}
         <Form.Group className="mb-3" controlId="bookImage">
           <Form.Label>Book Image Link</Form.Label>
           <Form.Control type="name" placeholder="Paste link to an image of your book" />
