@@ -4,7 +4,7 @@ class UpdateBook extends Component {
 
   render() {
     return (
-      <Button onClick= {() => this.props.onButtonClick(this.props.book) && this.props.onUpdate()}>
+      <Button onClick= {() => this.props.onButtonClick()}>
         Update
       </Button>
     );
