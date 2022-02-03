@@ -9,7 +9,8 @@ import DeleteButton from './DeleteButton';
 import FormUpdateModal from './FormUpdateModal';
 import UpdateBook from './UpdateBook';
 
-const SERVER = 'http://localhost:3001';
+const SERVER = process.env.REACT_APP_SERVER;
+console.log(SERVER);
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class BestBooks extends React.Component {
       books: [],
       bookForm: false,
       updateForm: false,
+      selectedBook: {}
     }
   }
 
@@ -34,9 +36,10 @@ class BestBooks extends React.Component {
     });
   }
 
-  updateHandler = () => {
+  updateHandler = (selectedBook) => {
     this.setState({
-      updateForm: true
+      updateForm: true,
+      selectedBook: selectedBook
     });
   }
 
@@ -89,25 +92,29 @@ class BestBooks extends React.Component {
     const id = updateBookId._id;
     let updateBooks = this.state.books;
     console.log(updateBooks);
-    updateBooks = this.state.books.map(currentBook => currentBook._id === updateBookId._id ? updateBooks : updateBooks );
+    updateBooks = this.state.books.map(currentBook => currentBook._id === updateBookId._id ? updateBooks : currentBook );
     this.setState({ books: updateBooks });
     console.log(id);
     const config = {
       params: { email: this.props.user.email },
+      data: {description: updateBookId.description,
+        image: updateBookId.image,
+        status: updateBookId.status,
+        title: updateBookId.title},
       method: 'put',
       baseURL: `${SERVER}`,
       url: `/books/${id}`
     }
-    await axios(config);
-    console.log(config);
-
+    let response = await axios(config);
+    console.log(response);
+    this.getBooks();
   }
   
 
   render() {
 
     // /* TODO: render user's books in a Carousel */
-
+      console.log(this.state.books);
     return (
       <>
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
@@ -120,20 +127,22 @@ class BestBooks extends React.Component {
                   <h2 id="desc">{book.title}</h2>
                   <p>{book.description}</p>
                   <DeleteButton deleteBook={this.deleteBook} book={book}/>
-                  <UpdateBook onButtonClick={this.updateHandler}/>
-                  {this.state.updateForm ? <FormUpdateModal onUpdate={this.onUpdate} updateHandler={this.updateHandler} onHide ={this.onHide} book = {book}/> : null }
+                  <UpdateBook onButtonClick={this.updateHandler} book={book}/>
+                  
                 </Carousel.Caption>
 
               </Carousel.Item>
 
             ))}
-
+  
           </Carousel>
         ) : (
           <h3>No Books Found </h3>
         )
         }
         {this.state.bookForm ? <BookFormModal onCreate={this.createNewBooks} bookFormHandler={this.bookFormHandler} onHide ={this.onHide} /> : <AddBook onButtonClick={this.bookFormHandler} /> }
+
+        {this.state.updateForm ? <FormUpdateModal onUpdate={this.onUpdate} updateHandler={this.updateHandler} onHide ={this.onHide} book={this.state.selectedBook} /> : null }
        
       </>
     )

@@ -42,6 +42,7 @@ export default class FormUpdateModal extends Component {
   
   
   render() {
+    console.log(this.props);
     return (
         <Modal show={this.props.updateHandler} onHide={this.props.onHide}>
           <Modal.Header closeButton>
