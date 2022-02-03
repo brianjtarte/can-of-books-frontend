@@ -8,6 +8,8 @@ import './Carousel.css';
 import DeleteButton from './DeleteButton';
 import FormUpdateModal from './FormUpdateModal';
 import UpdateBook from './UpdateBook';
+import { withAuth0 } from '@auth0/auth0-react';
+
 
 const SERVER = process.env.REACT_APP_SERVER;
 console.log(SERVER);
@@ -29,7 +31,7 @@ class BestBooks extends React.Component {
     this.getBooks();
     console.log('Your Books Have Been Received!')
   }
-}
+
 
   bookFormHandler = () => {
     this.setState({
@@ -75,6 +77,7 @@ class BestBooks extends React.Component {
     const response = await axios.get(config);
     this.setState({ books: response.data });
     console.log(response.data);
+  }
   }
 
 
@@ -158,5 +161,6 @@ class BestBooks extends React.Component {
     )
   }
 }
+
 
 export default withAuth0(BestBooks);
