@@ -1,16 +1,19 @@
-import { Component } from 'react'
-
+// import { Component } from 'react'
 import Button from 'react-bootstrap/Button'
+import { useAuth0 } from '@auth0/auth0-react';
 
 
-export default class LoginButton extends Component {
-
+function LoginButton() {
+    const {
+      isAuthenticated,
+      loginWithRedirect,
+    } = useAuth0();
  
 
-  render() {
-
-    /* TODO: Render a button with label 'Log In'. When the button is clicked then show LoginForm instead */
-    return  <Button as="input" type="submit" value="Login" onClick={this.props.displayFormHandler} />
-
+  
+    return !isAuthenticated && (  <Button onClick={loginWithRedirect} />
+    );
   }
-}
+
+
+export default LoginButton;

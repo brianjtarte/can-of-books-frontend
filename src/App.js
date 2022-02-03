@@ -4,6 +4,8 @@ import Footer from './Footer';
 import BestBooks from './BestBooks';
 import Profile from './Profile';
 import Login from './Login';
+// import { withAuth0 } from '@auth0/auth0-react';
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -44,18 +46,18 @@ class App extends React.Component {
     return (
       <>
         <Router>
-          <Header user={this.state.user} logoutHandler={this.logoutHandler} />
+          <Header user={this.props.auth0.isAuthenticated} logoutHandler={this.logoutHandler} />
 
           <Switch>
             <Route exact path="/">
-              {this.state.user ? (
-                <BestBooks user={this.state.user}/>
+              {this.props.auth0.isAuthenticated ? (
+                <BestBooks user={this.props.auth0.isAuthenticated}/>
               ) : (
                 <Login loginHandler={this.loginHandler} />
               )}
             </Route>
             <Route exact path="/profile">
-              {this.state.user ? <Profile user={this.state.user} /> : <h3>Please Login to View Profile</h3>}
+              {this.props.auth0.isAuthenticated ? <Profile user={this.props.auth0.isAuthenticated} /> : <h3>Please Login to View Profile</h3>}
             </Route>
 
           </Switch>
@@ -67,3 +69,4 @@ class App extends React.Component {
 }
 
 export default App;
+
