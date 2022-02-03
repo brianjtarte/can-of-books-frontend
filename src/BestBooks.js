@@ -29,6 +29,7 @@ class BestBooks extends React.Component {
     this.getBooks();
     console.log('Your Books Have Been Received!')
   }
+}
 
   bookFormHandler = () => {
     this.setState({
@@ -59,12 +60,21 @@ class BestBooks extends React.Component {
     })
   }
   getBooks = async () => {
-    let apiUrl = `${SERVER}/books`;
-    console.log(apiUrl);
-    const response = await axios.get(apiUrl);
+    if (this.props.auth0.isAuthenticated) {
+      const res = await this.props.auth0.getIdTokenClaims();
+      const jwt = res.__raw;
+      console.log("jwt: ", jwt);
+      const config = {
+        headers: { "Authorization": `Bearer ${jwt}` },
+        method: 'get',
+        baseURL: process.env.REACT_APP_SERVER,
+        url: '/books'
+      }
+    // let apiUrl = `${SERVER}/books`;
+    // console.log(apiUrl);
+    const response = await axios.get(config);
     this.setState({ books: response.data });
     console.log(response.data);
-
   }
 
 
@@ -149,4 +159,4 @@ class BestBooks extends React.Component {
   }
 }
 
-export default BestBooks;
+export default withAuth0(BestBooks);

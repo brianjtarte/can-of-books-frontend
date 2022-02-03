@@ -1,14 +1,16 @@
-import { Component } from "react";
+import { useAuth0 } from '@auth0/auth0-react';
 
-class LogoutButton extends Component {
+function LogoutButton() {
+  const {
+    isAuthenticated,
+    logout,
+  } = useAuth0();
 
-  render() {
-    return (
-      <button onClick={this.props.logoutHandler}>
-        Log Out
-      </button>
-    );
-  }
-};
+  return isAuthenticated && (
+    <button onClick={() => {
+      logout({ returnTo: window.location.origin });
+    }}>Log out</button>
+  );
+}
 
 export default LogoutButton;
