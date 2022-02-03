@@ -57,9 +57,7 @@ class App extends React.Component {
             <Route exact path="/profile">
               {this.state.user ? <Profile user={this.state.user} /> : <h3>Please Login to View Profile</h3>}
             </Route>
-                {/* <Route path="/CreateBooks">
-                  <CreateBooks />
-                </Route> */}
+
           </Switch>
           <Footer />
         </Router>
